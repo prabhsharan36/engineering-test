@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm"
 import { CreateStudentInput, UpdateStudentInput } from "../interface/student.interface"
+import { Group } from "./group.entity"
+import { Roll } from "./roll.entity"
 
 @Entity()
 export class Student {
@@ -14,6 +16,12 @@ export class Student {
 
   @Column()
   photo_url: string
+
+  @ManyToMany(() => Group, (group) => group.students)
+  groups: Group[]
+
+  @ManyToMany(() => Roll, (roll) => roll.students)
+  rolls: Roll[]
 
   public prepareToCreate(input: CreateStudentInput) {
     this.first_name = input.last_name
