@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm"
 import { Request, Response } from "express"
+import { CreateGroupStudentInput } from "../interface/group-student.interface"
 import { CreateGroupInput, UpdateGroupInput } from "../interface/group.interface"
 import { Roll } from "../entity/roll.entity"
 import { Group } from "../entity/group.entity"
@@ -150,7 +151,7 @@ export class GroupController {
 
   async addGroupStudent(result: any[], groupId: number) {
     result.forEach(async (student: any) => {
-      const createGroupStudentInput: any = {
+      const createGroupStudentInput: CreateGroupStudentInput = {
         student_id: student.student_id,
         group_id: groupId,
         incident_count: student.incident_count,
@@ -183,6 +184,6 @@ export class GroupController {
         condtionalStr += " OR "
       }
     })
-    return `(${condtionalStr})`
+    return `${condtionalStr}`
   }
 }
